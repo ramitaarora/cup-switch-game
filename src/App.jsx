@@ -2,52 +2,47 @@ import Header from './components/Header'
 import { useState } from 'react'
 
 export default function App() {
+  let cupArray = ["Cup1", "Cup2", "Cup3"]
+  let newArray = [];
+  const numArray = [0, 1, 2]
   let counter = 0;
 
-  const getRandomNum = () => {
-    
-    let randomNum = Math.floor(Math.random() * 3 + 1);
+  const getNum = () => {
+    let randomNum = Math.floor(Math.random() * 3);
     return randomNum;
   };
 
-  const pickRandCups = () => {
-    let firstCup = getRandomNum();
-    let secondCup = getRandomNum();
-    let thirdCup = getRandomNum();
+  const swapCups = () => {
+    let num1 = getNum();
+    let num2 = getNum();
 
-    // console.log(firstCup, secondCup, thirdCup);
-    console.log(counter)
-  
-    if (firstCup !== secondCup && firstCup !== thirdCup && counter < 10) {
-      let cupOne = document.getElementById(`Cup${firstCup}`);
-      let cupTwo = document.getElementById(`Cup${secondCup}`);
-      let cupThree = document.getElementById(`Cup${thirdCup}`);
-  
-      let cupOneClass = cupOne.getAttribute("class");
-      let cupTwoClass = cupTwo.getAttribute("class");
-      // let cupThreeClass = cupThree.getAttribute("class");
-
-      setTimeout(() => {
-        cupOne.setAttribute("Class", cupTwoClass);
-        cupTwo.setAttribute("Class", cupOneClass);
-        // cupThree.setAttribute('class', cupThreeClass)
-      }, 5000)
-    
-      // setCounter((pre) => pre + 1);
-      counter += 1;
-
-      if (counter < 10) {
-        pickRandCups();
-      }
-      if (counter === 10) {
-        counter = 0;
-        return;
-      }
+    if (num1 === num2) {
+      // if the two numbers match, they can't swap; run program again
+      swapCups()
     } 
     
     else {
-      pickRandCups();
+      // get the missing position and assign it to num3
+      let num3 = 0;
+      for (let i = 0; i < numArray.length; i++) {
+        if (numArray[i] !== num1 && numArray[i] !== num2) {
+          num3 === numArray[i];
+        }
+      }
+      setTimeout(() => {
+        console.log("num1", num1, "num2", num2, "num3", num3)
+        newCups(num1, num2, num3)
+      }, 2000)
     }
+  }
+
+  function newCups(cup1, cup2, cup3) {
+    // swap cup positions in the new array
+    newArray[cup1] = cupArray[cup2];
+    newArray[cup2] = cupArray[cup1];
+    newArray[cup3] = cupArray[cup3];
+    console.log("cupArray", cupArray);
+    console.log("newArray", newArray);
   }
 
   return (
@@ -65,7 +60,7 @@ export default function App() {
         </div>
         
       </div> 
-      <button onClick={pickRandCups}>Go</button>
+      <button onClick={swapCups}>Go</button>
     </div>
   )
 }
